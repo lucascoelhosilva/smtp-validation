@@ -1,0 +1,13 @@
+version: '2'
+services:
+  api:
+    build: .
+    environment:
+    - "TZ=America/Sao_Paulo"
+    mem_limit: 512m
+    ports:
+      - "3000:3000"
+    volumes:
+      - ".:/app"
+networks:
+  default:
