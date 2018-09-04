@@ -22,7 +22,7 @@ const start = async function () {
             var transport = nodemailer.createTransport({
                 host: body.host,
                 port: body.port,
-                secure: true, // use TLS
+                secure: false, // use TLS
                 debug: true,
                 auth: {
                     user: body.email,
@@ -42,11 +42,18 @@ const start = async function () {
             return new Promise(function (resolve, reject) {
                 transport.verify(function (error, success) {
                     if (error) {
+                        console.log(error);
                         var errorFormat = JSON.stringify(error);
                         resolve(errorFormat);
                     } else {
                         transport.sendMail(textEmail, function (error, response) {
-                            resolve(response);
+                            if(error){
+                                console.log(error);
+                                var errorFormat = JSON.stringify(error);
+                                resolve(errorFormat);
+                            } else {
+                                resolve(response);
+                            }
                         });
                     }
                 });
